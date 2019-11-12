@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ku.piii2019.gui2.FXMLController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding> 
+    <Label style="-fx-font: NORMAL 20 Tahoma;" text="Music Collection"                
+           GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="addressBookLabel">
+    </Label>
+    <TableView fx:id="tableView1" 
+               GridPane.columnIndex="0" 
+               GridPane.columnSpan="1" 
+               GridPane.hgrow="ALWAYS" 
+               GridPane.vgrow="ALWAYS"        
+               GridPane.rowIndex="1">
+    </TableView>
+    <Button fx:id="button1" 
+               GridPane.columnIndex="0" 
+            GridPane.rowIndex="2" 
+            text="Empty Button One" 
+            onAction="#handleButton1Action" />
+    <TableView fx:id="tableView2" 
+               GridPane.columnIndex="1" 
+               GridPane.columnSpan="1" 
+               GridPane.hgrow="ALWAYS" 
+               GridPane.vgrow="ALWAYS"        
+               GridPane.rowIndex="1">
+    </TableView>
+    <Button fx:id="button2" 
+            GridPane.columnIndex="1" 
+            GridPane.rowIndex="2" 
+            text="Empty Button 2" 
+            onAction="#handleButton2Action" />
+
+  
+    <MenuBar fx:id="menuBar" >
+        <menus>
+            <Menu text="Table 1">
+                <items>
+                    <MenuItem text="Open Collection..." onAction="#openIn1"/>
+                    <MenuItem text="Open Collection A" onAction="#openAIn1" />
+                    <MenuItem text="Open Collection B" onAction="#openBIn1" />
+                    <MenuItem text="Open Collections A and B" onAction="#openABIn1" />
+                    <SeparatorMenuItem  />
+                    <MenuItem text="Insert Table 2 into Table 1" onAction="#insert2In1" />
+                    <MenuItem text="Show Items in Table 1 missing from Table 2" onAction="#show1MissingIn2" />
+                    <MenuItem text="Exit"/>
+                    
+                    <!-- This needs to be implemented if required -->
+                </items>
+            </Menu>
+            <Menu text="Table 2">
+                <items>
+                    <MenuItem text="Open Collection..." onAction="#openIn2"/>
+                    <MenuItem text="Open Collection A" onAction="#openAIn2" />
+                    <MenuItem text="Open Collection B" onAction="#openBIn2" />
+                    <MenuItem text="Open Collections A and B" onAction="#openABIn2" />
+                    <MenuItem text="Insert Table 1 into Table 2" onAction="#insert1In2" />
+                    <MenuItem text="Show Items in Table 2 missing from Table 1" onAction="#show2MissingIn1" />
+                </items>
+            </Menu>
+            <Menu text="Edit">
+                <items>
+                    <MenuItem text="Swap" onAction="#swap" />                    
+                    <MenuItem text="Copy"/>
+                    <MenuItem text="Cut"/>
+                    <MenuItem text="Paste"/>
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem text="Search" disable="true"/>
+                    <MenuItem text="Online Manual" visible="false"/>
+                    <SeparatorMenuItem />
+                    <MenuItem text="About" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+</GridPane>
