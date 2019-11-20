@@ -28,6 +28,7 @@
             GridPane.rowIndex="2" 
             text="Empty Button One" 
             onAction="#handleButton1Action" />
+    
     <TableView fx:id="tableView2" 
                GridPane.columnIndex="1" 
                GridPane.columnSpan="1" 
@@ -39,6 +40,19 @@
             GridPane.columnIndex="1" 
             GridPane.rowIndex="2" 
             text="Empty Button 2" 
+            onAction="#handleButton2Action" />
+    
+    <TableView fx:id="tableView3" 
+               GridPane.columnIndex="2" 
+               GridPane.columnSpan="1" 
+               GridPane.hgrow="ALWAYS" 
+               GridPane.vgrow="ALWAYS"        
+               GridPane.rowIndex="1">
+    </TableView>
+    <Button fx:id="button3" 
+            GridPane.columnIndex="2" 
+            GridPane.rowIndex="2" 
+            text="Empty Button 3" 
             onAction="#handleButton2Action" />
 
   
@@ -52,7 +66,9 @@
                     <MenuItem text="Open Collections A and B" onAction="#openABIn1" />
                     <SeparatorMenuItem  />
                     <MenuItem text="Insert Table 2 into Table 1" onAction="#insert2In1" />
+                    <MenuItem text="Insert Table 3 into Table 1" onAction="#insert3In1" />
                     <MenuItem text="Show Items in Table 1 missing from Table 2" onAction="#show1MissingIn2" />
+                    <MenuItem text="Show Items in Table 1 missing from Table 3" onAction="#show1MissingIn3" />
                     <MenuItem text="Exit"/>
                     
                     <!-- This needs to be implemented if required -->
@@ -65,7 +81,21 @@
                     <MenuItem text="Open Collection B" onAction="#openBIn2" />
                     <MenuItem text="Open Collections A and B" onAction="#openABIn2" />
                     <MenuItem text="Insert Table 1 into Table 2" onAction="#insert1In2" />
+                    <MenuItem text="Insert Table 3 into Table 2" onAction="#insert3In2" />
                     <MenuItem text="Show Items in Table 2 missing from Table 1" onAction="#show2MissingIn1" />
+                    <MenuItem text="Show Items in Table 2 missing from Table 3" onAction="#show2MissingIn3" />
+                </items>
+            </Menu>
+            <Menu text="Table 3">
+                <items>
+                    <MenuItem text="Open Collection..." onAction="#openIn3"/>
+                    <MenuItem text="Open Collection A" onAction="#openAIn3" />
+                    <MenuItem text="Open Collection B" onAction="#openBIn3" />
+                    <MenuItem text="Open Collections A and B" onAction="#openABIn3" />
+                    <MenuItem text="Insert Table 3 into Table 2" onAction="#insert3In2" />
+                    <MenuItem text="Insert Table 3 into Table 1" onAction="#insert3In1" />
+                    <MenuItem text="Show Items in Table 3 missing from Table 1" onAction="#show3MissingIn1" />
+                    <MenuItem text="Show Items in Table 3 missing from Table 2" onAction="#show3MissingIn2" />
                 </items>
             </Menu>
             <Menu text="Edit">
