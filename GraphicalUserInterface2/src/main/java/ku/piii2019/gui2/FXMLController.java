@@ -18,10 +18,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import ku.piii2019.bl2.*;
 
 public class FXMLController implements Initializable {
+    
+    /*public FXMLController(){
+        super();
+        selectMupltiple();
+    }*/
 
     @FXML
     private Label label;
@@ -50,13 +57,17 @@ public class FXMLController implements Initializable {
         System.out.println("You clicked me!");
         // label.setText("Hello World!");
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<MediaItemColumnInfo> columns = MediaItemTableViewFactory.makeColumnInfoList();
         MediaItemTableViewFactory.makeTable(tableView1, columns);
         MediaItemTableViewFactory.makeTable(tableView2, columns);
         MediaItemTableViewFactory.makeTable(tableView3, columns);
+        
+        tableView1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView2.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView3.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @FXML
