@@ -29,6 +29,8 @@ public class FXMLController implements Initializable {
     private TableView<MediaItem> tableView1;
     @FXML
     private TableView<MediaItem> tableView2;
+    @FXML
+    private TableView<MediaItem> tableView3;
 
     String collectionRootAB = "test_folders" + File.separator
             + "original_filenames";
@@ -54,6 +56,7 @@ public class FXMLController implements Initializable {
         List<MediaItemColumnInfo> columns = MediaItemTableViewFactory.makeColumnInfoList();
         MediaItemTableViewFactory.makeTable(tableView1, columns);
         MediaItemTableViewFactory.makeTable(tableView2, columns);
+        MediaItemTableViewFactory.makeTable(tableView3, columns);
     }
 
     @FXML
@@ -65,12 +68,32 @@ public class FXMLController implements Initializable {
     private void insert1In2(ActionEvent event) {
         insert(tableView1, tableView2);
     }
+    
+    @FXML
+    private void insert1In3(ActionEvent event) {
+        insert(tableView3, tableView1);
+    }
 
     @FXML
     private void insert2In1(ActionEvent event) {
         insert(tableView1, tableView2);
     }
+    
+    @FXML
+    private void insert2In3(ActionEvent event) {
+        insert(tableView3, tableView2);
+    }
 
+    @FXML
+    private void insert3In1(ActionEvent event) {
+        insert(tableView1, tableView3);
+    }
+    
+    @FXML
+    private void insert3In2(ActionEvent event) {
+        insert(tableView3, tableView2);
+    }
+    
     @FXML
     private void show2MissingIn1(ActionEvent event) {
 //        showMissing(tableView2, tableView1);
@@ -94,6 +117,26 @@ public class FXMLController implements Initializable {
     @FXML
     private void show1MissingIn2(ActionEvent event) {
         showMissing(tableView1, tableView2);
+    }
+    
+    @FXML
+    private void show1MissingIn3(ActionEvent event) {
+        showMissing(tableView1, tableView3);
+    }
+    
+    @FXML
+    private void show2MissingIn3(ActionEvent event) {
+        showMissing(tableView2, tableView3);
+    }
+    
+    @FXML
+    private void show3MissingIn2(ActionEvent event) {
+        showMissing(tableView3, tableView2);
+    }
+    
+    @FXML
+    private void show3MissingIn1(ActionEvent event) {
+        showMissing(tableView3, tableView1);
     }
 
     private void insert(TableView src, TableView dst) {
@@ -132,7 +175,27 @@ public class FXMLController implements Initializable {
         tableView2.setItems(table1Data);
 
     }
+    
+    @FXML
+    private void openIn3(ActionEvent event) {
+        open(3, null);
+    }
 
+    @FXML
+    private void openAIn3(ActionEvent event) {
+        open(3, collectionRootA);
+    }
+
+    @FXML
+    private void openBIn3(ActionEvent event) {
+        open(3, collectionRootB);
+    }
+    
+    @FXML
+    private void openABIn3(ActionEvent event) {
+        open(3, collectionRootAB);
+    }
+    
     @FXML
     private void openIn2(ActionEvent event) {
         open(2, null);
@@ -186,6 +249,8 @@ public class FXMLController implements Initializable {
             referenceToEitherTable = tableView1;
         } else if (tableNumber == 2) {
             referenceToEitherTable = tableView2;
+        } else if (tableNumber == 3) {
+            referenceToEitherTable = tableView3;
         }
         addContents(referenceToEitherTable, collectionRoot);
     }
