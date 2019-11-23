@@ -101,9 +101,9 @@
             <Menu text="Edit">
                 <items>
                     <MenuItem text="Swap" onAction="#swap" />                    
-                    <MenuItem text="Copy"/>
+                    <MenuItem text="Copy" onAction="#copy"/>
                     <MenuItem text="Cut"/>
-                    <MenuItem text="Paste"/>
+                    <MenuItem text="Paste" onAction="#paste"/>
                 </items>
             </Menu>
             <Menu text="Help">
