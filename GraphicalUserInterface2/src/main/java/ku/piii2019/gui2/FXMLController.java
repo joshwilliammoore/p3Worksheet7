@@ -9,15 +9,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
@@ -38,6 +46,10 @@ public class FXMLController implements Initializable {
     private TableView<MediaItem> tableView2;
     @FXML
     private TableView<MediaItem> tableView3;
+    
+    Clipboard clipboard = Clipboard.getSystemClipboard();
+    ClipboardContent content = new ClipboardContent();
+    private ObservableList<MediaItem> copied = FXCollections.observableArrayList();
 
     String collectionRootAB = "test_folders" + File.separator
             + "original_filenames";
@@ -46,6 +58,41 @@ public class FXMLController implements Initializable {
     String collectionRootB = collectionRootAB + File.separator
             + "collection-B";
 
+    @FXML
+    private void copy(ActionEvent event){
+        ObservableList<MediaItem> selected = tableView1.getSelectionModel().getSelectedItems();
+        ObservableList<MediaItem> selected2 = tableView2.getSelectionModel().getSelectedItems();
+        pasteSelection(selected,selected2);
+        /*String copyThese = selected.toString();
+        
+        content.putFiles(selected);
+        System.out.println(content);
+        clipboard.setContent(content);*/
+        
+        
+    }
+    
+    private void pasteSelection(List<MediaItem> selected, List<MediaItem> selected2){
+        try{
+            ObservableList<MediaItem> result = FXCollections.observableArrayList(selected);
+        result.addAll(selected2);
+        System.out.println(result);
+        copied.addAll(result);
+        }catch(NullPointerException e){
+            
+        }
+    }
+    
+    @FXML
+    private void paste(ActionEvent event){
+        System.out.println(copied);
+        tableView3.setItems(copied);
+        /*if(!clipboard.hasContent(DataFormat.PLAIN_TEXT)){
+            ObservableValue<MediaItem> something = FXCollections.ObservableValue(content);
+            tableView3.setItems(something);
+        }*/
+    }
+    
     @FXML
     private void handleButton1Action(ActionEvent event) {
         System.out.println("You clicked me!");
