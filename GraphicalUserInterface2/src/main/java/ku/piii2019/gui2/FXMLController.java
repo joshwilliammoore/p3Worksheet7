@@ -22,13 +22,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.TransferMode;
 import javafx.stage.DirectoryChooser;
 import ku.piii2019.bl2.*;
 
@@ -59,6 +62,56 @@ public class FXMLController implements Initializable {
     String collectionRootB = collectionRootAB + File.separator
             + "collection-B";
 
+    private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
+    
+    private void addDrag(TableView<MediaItem> tableView){
+        tableView.setRowFactory(t -> { 
+                TableRow<MediaItem> row = new TableRow<>();
+                
+                row.setOnDragDetected(event -> {
+                    if(!row.isEmpty()){
+                        Integer index = row.getIndex();
+                        Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
+                        db.setDragView(row.snapshot(null,null));
+                        ClipboardContent cc = new ClipboardContent();
+                        cc.put(SERIALIZED_MIME_TYPE, index);
+                        db.setContent(cc);
+                        event.consume();
+                    }
+                });
+                
+                row.setOnDragOver(event -> {
+                    Dragboard db = event.getDragboard();
+                    if(db.hasContent(SERIALIZED_MIME_TYPE)){
+                        if(row.getIndex() != ((Integer)db.getContent(SERIALIZED_MIME_TYPE)).intValue()){
+                            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                            event.consume();
+                        }
+                    }
+                });
+                
+                row.setOnDragDropped(event -> {
+                    Dragboard db = event.getDragboard();
+                    if(db.hasContent(SERIALIZED_MIME_TYPE)){
+                        int draggedIndex = (Integer) db.getContent(SERIALIZED_MIME_TYPE);
+                        MediaItem draggedMediaItem = tableView.getItems().remove(draggedIndex);
+                        int dropIndex;
+                        if(row.isEmpty()){
+                            dropIndex = tableView.getItems().size();
+                        }else{
+                            dropIndex = row.getIndex();
+                        }
+                        tableView.getItems().add(dropIndex, draggedMediaItem);
+                        event.setDropCompleted(true);
+                        tableView.getSelectionModel().select(dropIndex);
+                        event.consume();
+                    }
+                });
+                
+                return row;
+        });
+    }
+    
     @FXML
     private void copy(ActionEvent event){
         ObservableList<MediaItem> selected = tableView1.getSelectionModel().getSelectedItems();
@@ -146,6 +199,10 @@ public class FXMLController implements Initializable {
         tableView1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView2.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView3.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        addDrag(tableView1);
+        addDrag(tableView2);
+        addDrag(tableView3);
     }
 
     @FXML
