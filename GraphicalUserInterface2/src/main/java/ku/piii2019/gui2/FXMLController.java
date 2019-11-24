@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.beans.value.ChangeListener;
@@ -62,7 +63,7 @@ public class FXMLController implements Initializable {
     private void copy(ActionEvent event){
         ObservableList<MediaItem> selected = tableView1.getSelectionModel().getSelectedItems();
         ObservableList<MediaItem> selected2 = tableView2.getSelectionModel().getSelectedItems();
-        pasteSelection(selected,selected2);
+        copySelection(selected,selected2);
         /*String copyThese = selected.toString();
         
         content.putFiles(selected);
@@ -72,21 +73,51 @@ public class FXMLController implements Initializable {
         
     }
     
-    private void pasteSelection(List<MediaItem> selected, List<MediaItem> selected2){
+    private void copySelection(List<MediaItem> selected, List<MediaItem> selected2){
         try{
             ObservableList<MediaItem> result = FXCollections.observableArrayList(selected);
-        result.addAll(selected2);
-        System.out.println(result);
-        copied.addAll(result);
+            result.addAll(selected2);
+            System.out.println(result);
+            copied.clear();
+            copied.addAll(result);
+        }catch(NullPointerException e){
+            
+        }
+    }
+    
+    private void cutSelection(List<MediaItem> selected){
+        try{
+            ObservableList<MediaItem> table3 = tableView3.getItems();
+            copied.clear();
+            copied.addAll(selected);
+            ObservableList<MediaItem> tempCopy = FXCollections.observableArrayList();
+            for(MediaItem item : table3){
+                if(!selected.contains(item)){
+                    tempCopy.add(item);
+                }
+            }
+            tableView3.setItems(tempCopy);
         }catch(NullPointerException e){
             
         }
     }
     
     @FXML
+    private void cut(ActionEvent event){
+        ObservableList<MediaItem> selected = tableView3.getSelectionModel().getSelectedItems();
+        cutSelection(selected);
+    }
+    
+    @FXML
     private void paste(ActionEvent event){
-        System.out.println(copied);
-        tableView3.setItems(copied);
+        if(tableView3==null){
+            System.out.println(copied);
+            tableView3.setItems(copied);
+        }else{
+            ObservableList<MediaItem> table3 = tableView3.getItems();
+            table3.addAll(copied);
+        }
+        
         /*if(!clipboard.hasContent(DataFormat.PLAIN_TEXT)){
             ObservableValue<MediaItem> something = FXCollections.ObservableValue(content);
             tableView3.setItems(something);
