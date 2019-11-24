@@ -102,7 +102,7 @@
                 <items>
                     <MenuItem text="Swap" onAction="#swap" />                    
                     <MenuItem text="Copy" onAction="#copy"/>
-                    <MenuItem text="Cut"/>
+                    <MenuItem text="Cut" onAction="#cut"/>
                     <MenuItem text="Paste" onAction="#paste"/>
                 </items>
             </Menu>
